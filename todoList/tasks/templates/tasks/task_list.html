@@ -1,0 +1,84 @@
+{% extends 'tasks\base.html' %}
+{% block content %}
+    <div class="container mt-5">
+      <h2 class="text-center mb-4">To-Do List</h2>
+
+      <!-- Add Task Form -->
+      <form method="POST" class="d-flex mb-4">
+        {% csrf_token %}
+        <input
+          type="text"
+          name="title"
+          class="form-control me-2"
+          placeholder="Enter a new task..."
+          required
+        />
+        <input 
+          type="date"
+          name="due_date"
+          class="form-control me-2"
+          {% if task.due_date %} value="{{ task.due_date }}" {% endif %}
+        />
+        <select name="priority" class="form-select me-2">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Add Task</button>
+    </form>
+    
+
+      <!-- Task List -->
+      <div class="row">
+        {% for task in tasks %}
+        <div class="col-md-4 mb-3">
+          <div
+            class="card {% if task.completed %} bg-success text-white {% else %} bg-light {% endif %}"
+          >
+            <div class="card-body">
+              <h5 class="card-title">
+                <span
+                  {% if task.completed %}
+                  style="text-decoration: line-through"
+                  {% endif %}
+                >
+                  {{ task.title }}
+                </span>
+                <span class="badge {% if task.priority == 'high' %}bg-danger{% elif task.priority == 'medium' %}bg-warning{% else %}bg-success{% endif %} ms-2">
+                    {{ task.priority|capfirst }}
+                </span>
+                {% if task.due_date %}
+                <small class="text-muted ms-2">Due: {{ task.due_date }}</small>
+                {% endif %}
+              </h5>
+              <div class="d-flex justify-content-between align-items-center">
+                {% if not task.completed %}
+                <a
+                  href="{% url 'complete-task' task.id %}"
+                  class="btn btn-success btn-sm"
+                  >Complete</a
+                >
+                {% endif %}
+                <a
+                  href="{% url 'task-update' task.id %}"
+                  class="btn btn-warning btn-sm"
+                  >Edit</a
+                >
+                <a
+                  href="{% url 'delete-task' task.id %}"
+                  class="btn btn-danger btn-sm"
+                  onclick="return confirmDelete();"
+                  >Delete</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+          <div class="alert alert-info text-center">No tasks yet!</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endblock %}
