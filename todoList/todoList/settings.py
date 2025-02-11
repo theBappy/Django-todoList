@@ -34,7 +34,7 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
-ALLOWED_HOSTS = ["https://django-todolist-398k.onrender.com", "localhost"]
+ALLOWED_HOSTS = ["django-todolist-398k.onrender.com", "localhost"]
 
 
 # Application definition
