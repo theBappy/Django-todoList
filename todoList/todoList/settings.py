@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
+PORT = os.getenv("PORT", "10000")
 from dotenv import load_dotenv
 from urllib.parse import urlparse
 from pathlib import Path
