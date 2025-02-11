@@ -34,7 +34,7 @@ DEBUG = False
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
-ALLOWED_HOSTS = ["django-todolist-398k.onrender.com", "localhost"]
+ALLOWED_HOSTS = ["django-todolist-f1vf.onrender.com", "localhost"]
 
 
 # Application definition
